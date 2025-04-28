@@ -1,5 +1,4 @@
-# app.py
-
+# archivo: tsp_api.py
 from flask import Flask, jsonify
 from flask_cors import CORS
 import math
@@ -8,7 +7,6 @@ import random
 app = Flask(__name__)
 CORS(app)
 
-# Coordenadas de las ciudades
 coord = {
     'Jiloyork': (19.916012, -99.580580),
     'Toluca': (19.289165, -99.655697),
@@ -22,11 +20,9 @@ coord = {
     'QRO': (20.59719437542255, -100.38667040246602)
 }
 
-# Función para calcular distancia entre dos coordenadas
 def distancia(coord1, coord2):
     return math.sqrt((coord1[0] - coord2[0]) ** 2 + (coord1[1] - coord2[1]) ** 2)
 
-# Evaluar la distancia total de una ruta
 def evalua_ruta(ruta):
     total = 0
     for i in range(len(ruta) - 1):
@@ -34,7 +30,6 @@ def evalua_ruta(ruta):
     total += distancia(coord[ruta[-1]], coord[ruta[0]])
     return total
 
-# Algoritmo Hill Climbing
 def hill_climbing():
     ruta = list(coord.keys())
     random.shuffle(ruta)
@@ -56,7 +51,11 @@ def hill_climbing():
                         break
     return ruta
 
-# Ruta API para resolver el TSP
+# ✅ Agrega esta ruta para la raíz
+@app.route('/')
+def home():
+    return 'API de TSP funcionando correctamente. Usa /tsp para calcular una ruta.'
+
 @app.route('/tsp', methods=['GET'])
 def resolver_tsp():
     ruta = hill_climbing()
@@ -68,6 +67,5 @@ def resolver_tsp():
         'distancia_total': distancia_total
     })
 
-# Levantar la aplicación
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    app.run(port=5000)
