@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ruta Óptima TSP</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(to right, #4facfe, #00f2fe);
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        h1 {
+            margin-top: 40px;
+            font-size: 42px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.85);
+            border-radius: 20px;
+            padding: 40px;
+            margin-top: 30px;
+            box-shadow: 0 12px 24px rgba(0,0,0,0.2);
+            max-width: 600px;
+            width: 90%;
+            text-align: center;
+            animation: fadeIn 1s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {opacity: 0; transform: translateY(20px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+
+        button {
+            padding: 14px 40px;
+            font-size: 18px;
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s, background 0.3s;
+            margin-bottom: 25px;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+            background: linear-gradient(135deg, #5c7cfa, #9775fa);
+        }
+
+        #distancia {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            text-align: left;
+        }
+
+        li {
+            background: #ecf0f1;
+            margin: 8px 0;
+            padding: 12px 20px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            font-size: 17px;
+            color: #2c3e50;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: background 0.2s;
+        }
+
+        li:hover {
+            background: #dfe6e9;
+        }
+
+        li::before {
+            content: "📍";
+            margin-right: 12px;
+            font-size: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Ruta Óptima con Hill Climbing</h1>
+
+    <div class="container">
+        <button onclick="obtenerRuta()">🚀 Generar Ruta</button>
+        <p id="distancia">Distancia Total: —</p>
+        <ul id="listaRuta"></ul>
+    </div>
+
+    <script>
+        async function obtenerRuta() {
+            try {
+                const res = await fetch('http://localhost:5000/tsp');
+                const data = await res.json();
+
+                document.getElementById('distancia').innerText = 
+                    `Distancia Total: ${data.distancia_total.toFixed(2)} km`;
+
+                const lista = document.getElementById('listaRuta');
+                lista.innerHTML = '';
+                data.ruta.forEach((ciudad, i) => {
+                    const li = document.createElement('li');
+                    li.textContent = `${i + 1}. ${ciudad}`;
+                    lista.appendChild(li);
+                });
+            } catch (error) {
+                alert('Error al obtener la ruta');
+                console.error(error);
+            }
+        }
+    </script>
+</body>
+</html>

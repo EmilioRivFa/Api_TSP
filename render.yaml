@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: tsp-api
+    env: python
+    buildCommand: ""
+    startCommand: python tsp_api.py
+    plan: free
