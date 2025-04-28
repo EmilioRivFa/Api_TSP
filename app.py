@@ -1,4 +1,4 @@
-# archivo: tsp_api.py
+# archivo: app.py
 from flask import Flask, jsonify
 from flask_cors import CORS
 import math
@@ -51,7 +51,7 @@ def hill_climbing():
                         break
     return ruta
 
-# ✅ Agrega esta ruta para la raíz
+# ✅ Ruta raíz para evitar error 404 en Render
 @app.route('/')
 def home():
     return 'API de TSP funcionando correctamente. Usa /tsp para calcular una ruta.'
