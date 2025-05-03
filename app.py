@@ -1,4 +1,4 @@
-# archivo: app.py
+# archivo: tsp_api.py
 from flask import Flask, jsonify
 from flask_cors import CORS
 import math
@@ -8,16 +8,16 @@ app = Flask(__name__)
 CORS(app)
 
 coord = {
-    'Jiloyork': (19.916012, -99.580580),
-    'Toluca': (19.289165, -99.655697),
-    'Atlacomulco': (19.799520, -99.873844),
-    'Guadalajara': (20.677754472859146, -103.34625354877137),
-    'Monterrey': (25.69161110159454, -100.321838480256),
-    'QuintanaRoo': (21.163111924844458, -86.80231502121464),
-    'Michohacan': (19.701400113725654, -101.20829680213464),
-    'Aguascalientes': (21.87641043660486, -102.26438663286967),
-    'CDMX': (19.432713075976878, -99.13318344772986),
-    'QRO': (20.59719437542255, -100.38667040246602)
+    'Jiloyork' :(19.916012, -99.580580),
+    'Toluca':(19.289165, -99.655697),
+    'Atlacomulco':(19.799520, -99.873844),
+    'Guadalajara':(20.677754472859146, -103.34625354877137),
+    'Monterrey':(25.69161110159454, -100.321838480256),
+    'QuintanaRoo':(21.163111924844458, -86.80231502121464),
+    'Michohacan':(19.701400113725654, -101.20829680213464),
+    'Aguascalientes':(21.87641043660486, -102.26438663286967),
+    'CDMX':(19.432713075976878, -99.13318344772986),
+    'QRO':(20.59719437542255, -100.38667040246602)
 }
 
 def distancia(coord1, coord2):
@@ -50,11 +50,6 @@ def hill_climbing():
                         ruta = ruta_tmp[:]
                         break
     return ruta
-
-# ✅ Ruta raíz para evitar error 404 en Render
-@app.route('/')
-def home():
-    return 'API de TSP funcionando correctamente. Usa /tsp para calcular una ruta.'
 
 @app.route('/tsp', methods=['GET'])
 def resolver_tsp():
