@@ -111,7 +111,7 @@
     <script>
         async function obtenerRuta() {
             try {
-                const res = await fetch('http://localhost:5000/tsp');
+                const res = await fetch('https://api-tsp.onrender.com/tsp');
                 const data = await res.json();
 
                 document.getElementById('distancia').innerText = 
